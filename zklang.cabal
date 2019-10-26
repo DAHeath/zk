@@ -1,0 +1,22 @@
+cabal-version:       2.4
+
+name:                zklang
+version:             0.1.0.0
+license:             BSD-3-Clause
+license-file:        LICENSE
+author:              David Heath
+maintainer:          heath.davidanthony@gmail.com
+category:            Language
+extra-source-files:  CHANGELOG.md
+
+library
+  exposed-modules:
+  other-modules: Term
+  build-depends:       base ^>=4.12.0.0
+                     , mtl
+                     , containers
+                     , lens
+                     , parsec
+                     , template-haskell
+  hs-source-dirs:      src
+  default-language:    Haskell2010

@@ -1,0 +1,64 @@
+\documentclass[11pt]{article}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{stmaryrd}
+
+\newcommand{\klet}[3]{\textsf{let}~#1=#2~\textsf{in}~#3}
+\new	command{\kfst}[1]{\textsf{fst}(#1)}
+\newcommand{\ksnd}[1]{\textsf{snd}(#1)}
+\newcommand{\kproject}[1]{\textsf{project}(#1)}
+\newcommand{\kconstruct}[1]{\textsf{construct}(#1)}
+\newcommand{\kinvert}[1]{\textsf{invert}(#1)}
+\newcommand{\ebool}{\llbracket \mathbb{B} \rrbracket}
+\newcommand{\eint}[1]{\llbracket \mathbb{Z}_{2^{#1}} \rrbracket}
+\newcommand{\tunit}{\textsf{unit}}
+\newcommand{\Tunit}{\textsf{Unit}}
+
+\begin{document}
+
+\begin{figure}
+\begin{align*}
+  t :=&~t \land t ~|~ t \oplus t ~|~ (t, t) ~|~ \kfst{t} ~|~ \ksnd{t} ~|~ \klet{x}{t}{t} ~|~ x ~|~ \tunit\\
+  T :=&~\ebool~|~T \times T~|~\Tunit\\
+  \land, \oplus \in&~(\ebool\times\ebool) \rightarrow \ebool\\
+\end{align*}
+\caption{%
+  The base language of circuits.
+}\label{fig:base-lang}
+\end{figure}
+
+\begin{figure}
+\begin{align*}
+  &add_2(a, b) :=\\ 
+  &~~\klet{((a_0, a_1), (b_0, b_1))}{(a, b)}{\\}
+  &~~\klet{out_0}{a_0 \oplus b_0}{\\}
+  &~~\klet{carry}{a_0 \land b_0}{\\}
+  &~~\klet{out_1}{a_1 \oplus (b_1 \oplus carry)}{\\}
+  &~~(out_0, out_1)
+\end{align*}
+
+\caption{%
+  An example circuit, a two bit adder, written in the base language.
+}
+\end{figure}
+
+\begin{figure}
+\begin{align*}
+  t :=&~\ldots~|~\kproject{t}~|~\kconstruct{t}~|~t+t~|~t\cdot t~|~\kinvert{t}\\
+  T :=&~\ldots~|~\eint{n}\\
+  T^0 :=&~ \unit\\
+  T^n :=&~ T \times T^{n-1}\\
+  \textsf{project} \in&~\eint{n} \rightarrow \ebool^n\\
+  \textsf{construct} \in&~\ebool^n\rightarrow\eint{n}\\
+  +, \cdot\in&~(\eint{n} \times \eint{n}) \rightarrow \eint{n}\\
+  \textsf{invert} \in&~\eint{n} \rightarrow \eint{n}\\
+\end{align*}
+\caption{%
+  The base language extended with ring operations (addition, multiplication, and additive inverse) as well as conversions between ring representation and Boolean representation (project and construct).
+}\label{fig:base-lang}
+\end{figure}
+
+
+
+\end{document}
